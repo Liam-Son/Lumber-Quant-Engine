@@ -1,6 +1,8 @@
 """
-Lumber Quant Engine v0.1.1
+Lumber Quant Engine v0.2
 - Demo / Live modes
+- Publication lags (no look-ahead on FRED)
+- Expanding-window IC weights (falls back to equal weight)
 - Configurable data start + backtest evaluation window
 """
 import argparse
@@ -14,13 +16,15 @@ from lumber_quant_engine.core import LumberFactorEngine, backtest, bootstrap_tot
 
 
 def main():
-    ap = argparse.ArgumentParser(description="Lumber Quant Engine")
+    ap = argparse.ArgumentParser(description="Lumber Quant Engine v0.2")
     ap.add_argument("--mode", choices=["demo", "live"], default="demo")
     ap.add_argument("--start", default="2005-01-01",
                     help="Data download / generation start date")
     ap.add_argument("--backtest-start", default=None,
-                    help="Optional: only evaluate performance from this date onward (e.g. 2015-01-01 or 2020-01-01)")
+                    help="Only evaluate performance from this date (e.g. 2020-01-01)")
     ap.add_argument("--threshold", type=float, default=0.75)
+    ap.add_argument("--equal-weight", action="store_true",
+                    help="Disable IC weighting and use static equal weights")
     args = ap.parse_args()
 
     Path("outputs").mkdir(exist_ok=True)
@@ -30,10 +34,12 @@ def main():
     else:
         df = load_live(args.start)
 
-    # Build factors on the full available history
-    sig = LumberFactorEngine().build(df)
+    engine = LumberFactorEngine(
+        use_ic_weights=not args.equal_weight,
+        apply_lags=True,
+    )
+    sig = engine.build(df)
 
-    # Restrict evaluation window if requested
     if args.backtest_start:
         sig = sig.loc[args.backtest_start:].copy()
         print(f"[Info] Backtest evaluation window starts at {args.backtest_start}")
@@ -46,14 +52,16 @@ def main():
         "outputs/summary.csv", index=False
     )
 
-    print("\nLUMBER QUANT ENGINE v0.1.1")
-    print("Mode           :", args.mode)
-    print("Data start     :", args.start)
-    print("Backtest start :", args.backtest_start or "(full series)")
-    print("Latest regime  :", bt["regime"].dropna().iloc[-1] if bt["regime"].notna().any() else "N/A")
-    print("Latest score   :", round(float(bt["lumber_pressure_score"].dropna().iloc[-1]), 3))
-    print("Stats          :", stats)
-    print("Bootstrap      :", boot)
+    print("\nLUMBER QUANT ENGINE v0.2")
+    print("Mode            :", args.mode)
+    print("IC weights      :", not args.equal_weight)
+    print("Publication lags:", True)
+    print("Data start      :", args.start)
+    print("Backtest start  :", args.backtest_start or "(full series)")
+    print("Latest regime   :", bt["regime"].dropna().iloc[-1] if bt["regime"].notna().any() else "N/A")
+    print("Latest score    :", round(float(bt["lumber_pressure_score"].dropna().iloc[-1]), 3))
+    print("Stats           :", stats)
+    print("Bootstrap       :", boot)
     print("Saved outputs/lumber_engine_results.csv and outputs/summary.csv")
 
 
