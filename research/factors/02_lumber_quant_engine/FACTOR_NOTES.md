@@ -1,32 +1,48 @@
-# Factor 02 — Lumber Quant Engine (6-factor pressure model)
+# Factor 02 — Lumber Quant Engine v0.2
 
-## Status (Sep 2026)
+## What changed in v0.2
 
-Live public-data coverage is currently limited:
+1. **Publication lags**  
+   FRED and other series are shifted by realistic release lags before any signal is computed. This removes the classic look-ahead bias on macro data.
 
-| Factor              | Public data available? | Notes |
-|---------------------|------------------------|-------|
-| Burning Timber      | No                     | Needs wildfire acres + mill exposure |
-| Permit-to-Plank     | Yes                    | FRED PERMIT + HOUST                  |
-| Mortgage Choke      | Partial                | Rate yes; apps & full affordability limited |
-| Wood on Wheels      | Partial                | Truck tonnage only                   |
-| Rebuild             | No                     | Needs storm damage series            |
-| Weekend Warrior     | Partial                | Home-improvement sales only          |
+2. **Expanding-window IC weights**  
+   Instead of static 1/6 weights, each factor’s weight is its expanding-window correlation with next-month lumber returns (negative ICs are floored at 0). Falls back to equal weight until enough history exists.
 
-**LBR=F** continuous history via Yahoo currently starts ~Aug 2022 in this environment (50 months).
+3. **Clearer alternative-data contract**  
+   Missing series (wildfire, rail carloads, storm damage, traffic) stay optional. The engine re-weights across whatever is present.
+
+## Data reality check (Sep 2026)
+
+| Factor              | Free monthly source? | Notes |
+|---------------------|----------------------|-------|
+| Permit-to-Plank     | Yes (FRED)           | Strongest currently available |
+| Mortgage Choke      | Partial              | Rate yes; apps limited |
+| Wood on Wheels      | Partial              | Truck tonnage only |
+| Weekend Warrior     | Partial              | Home-improvement sales |
+| Burning Timber      | Annual only (NIFC)   | Needs monthly / geospatial for real edge |
+| Rebuild             | Event-level (NOAA)   | Needs aggregation |
+
+**LBR=F** history via Yahoo is still short (~2022 onward in many environments).
 
 ## How to run
 
 ```bash
 cd research/factors/02_lumber_quant_engine
 pip install -r requirements.txt
+
+# Demo (all factors populated synthetically)
 python run.py --mode demo
+
+# Live with IC weights + lags
 python run.py --mode live --start 2015-01-01 --backtest-start 2020-01-01
+
+# Force classic equal weights
+python run.py --mode live --equal-weight
 ```
 
-## Key findings so far
+## Next real edge
 
-- With only free public series, the composite score largely collapses to **Permit-to-Plank**.
-- IC of Permit-to-Plank vs 1-month forward lumber return is currently weak/negative on the short sample.
-- 3-month IC is mildly positive (~0.22) — worth monitoring as sample grows.
-- Equal-weight backtest performance is poor; next step is expanding-window IC weighting + proper vintage dates.
+- Ingest NIFC / MTBS wildfire polygons + sawmill locations for true Burning Timber exposure.
+- Licensed or scraped AAR lumber carloads + Statistics Canada exports.
+- NOAA / FEMA event costs rolled to monthly residential exposure.
+- Google Trends + any licensed foot-traffic feed for Weekend Warrior.
