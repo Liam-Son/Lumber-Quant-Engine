@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Lumber Quant Engine v0.3
-========================
+Lumber Quant Engine v3.0
+=======================
 Demo / live runner with publication lags, IC weights, and free proxies.
 """
 from __future__ import annotations
