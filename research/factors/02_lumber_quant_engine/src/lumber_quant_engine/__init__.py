@@ -1,6 +1,6 @@
 """
-Lumber Quant Engine
-===================
+Lumber Quant Engine v3
+======================
 Six-factor pressure / regime model for softwood lumber futures research.
 
 Public API
@@ -8,7 +8,6 @@ Public API
 - LumberFactorEngine
 - backtest, bootstrap_total_return
 - load_live, make_demo
-- load_nifc_annual_proxy, load_fred_rail_total
 """
 
 from .core import (
@@ -21,7 +20,7 @@ from .core import (
 )
 from .data import load_live, make_demo
 
-__version__ = "0.3.0"
+__version__ = "3.0.0"
 __all__ = [
     "LumberFactorEngine",
     "FactorWeights",
