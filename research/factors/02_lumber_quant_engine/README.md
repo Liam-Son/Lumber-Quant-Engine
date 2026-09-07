@@ -3,7 +3,7 @@
 Research-grade six-factor pressure / regime model for softwood lumber futures.
 
 > Not investment advice. **No alpha has been demonstrated** on live LBR=F data yet.
-> See PROOF_STATUS.md and PROGRESS.md.
+> See [PROOF_STATUS.md](PROOF_STATUS.md), [PROGRESS.md](PROGRESS.md), [PRICE_ENGINE_LINK.md](PRICE_ENGINE_LINK.md).
 
 ## Factors
 
@@ -23,6 +23,10 @@ Research-grade six-factor pressure / regime model for softwood lumber futures.
 3. Missing data causes automatic reweight
 4. Rebuild v2 = short-window level + spike (not lag-1 impulse bet)
 
+## Price check (Sep 2026)
+
+LBR ~$566 (−14% from peak). Engine stayed **NORMAL** through summer peak and August selloff. Details: [PRICE_ENGINE_LINK.md](PRICE_ENGINE_LINK.md).
+
 ## Quick start
 
 ```bash
@@ -30,18 +34,6 @@ pip install -r requirements.txt
 python run.py --mode demo
 python run.py --mode live --start 2018-01-01 --backtest-start 2022-08-01
 pytest tests/ -q
-```
-
-## Layout
-
-```
-run.py
-requirements.txt
-PROGRESS.md / PROOF_STATUS.md / CHANGELOG.md
-data/          # NIFC, StatCan, NOAA, Trends caches
-src/lumber_quant_engine/
-  core.py data.py alt_data.py
-tests/
 ```
 
 ## License
