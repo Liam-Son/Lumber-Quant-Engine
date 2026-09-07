@@ -1,31 +1,21 @@
 # Changelog
 
+## v3.1.0 — 2026-09-07
+
+### Fiber residual complex
+- FRED WPU085, WPU0911, CAPUTLG321S into Wood on Wheels
+- Nan-aware combination of flow + fiber legs
+
+### SHFE pulp → USD
+- `load_shfe_pulp_usd` / `refresh_shfe_pulp_front`
+- Auto-inject; residual-fiber weight
+
+### Quality
+- 10 automated tests
+- Version 3.1.0 public API exports
+
 ## v3.0.0 — 2026-09-07
+- Rebuild v2, StatCan, NOAA, Trends, NIFC, IC weights, lags, price–engine link
 
-### Research
-- Rebuild factor v2: 65% 12m level + 35% spike; lag 1 month
-- Lag-1 storm-damage impulse explored — not robust
-- **Price action linked to engine** (PRICE_ENGINE_LINK.md): NORMAL regime through 2026 peak and August selloff
-- No alpha demonstrated on LBR=F
-
-### Data
-- StatCan Canada softwood shipments auto-inject
-- NOAA Storm Events monthly property damage auto-inject
-- Google Trends DIY/lumber basket (cache / pytrends)
-- NIFC annual wildfire seasonal monthly proxy
-- FRED total rail carloads proxy
-
-### Engine
-- Expanding-window IC weights
-- Publication lags
-- Missing-factor reweighting
-- Demo + live CLI
-
-### Docs
-- PROGRESS.md, PROOF_STATUS.md, PRICE_ENGINE_LINK.md, ALT_DATA_THREE.md
-
-## v0.3.x — 2026-09-04
-- Production package layout, tests, free proxies
-
-## v0.2 — earlier
-- IC weights, publication lags, optional factors CSV
+## Earlier
+- Package layout, optional factors
