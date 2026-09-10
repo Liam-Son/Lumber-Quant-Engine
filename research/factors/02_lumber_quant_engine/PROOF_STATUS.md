@@ -1,32 +1,22 @@
 # Proof status — is there alpha?
 
-**As of 2026-09-07 (v3.0.0): No alpha has been demonstrated.**
+**As of 2026-09-10 (v3.1.0): No alpha has been demonstrated.**
+
+Automated tests and demo pipeline are green (`TEST_RESULTS.md`). That is software validation, not an economic result.
 
 | Candidate | What exists | Alpha proven? |
 |-----------|-------------|---------------|
-| Geospatial Burning Timber (fire x mill) | Annual NIFC seasonal proxy only | **No** |
+| Geospatial Burning Timber (fire × mill) | Annual NIFC seasonal proxy only | **No** |
 | Lumber-specific rail + Canadian exports | FRED total rail + StatCan shipments | **No** |
 | Storm / Rebuild intensity | NOAA monthly damage + Rebuild v2 | **No** |
 | Lag-1 damage impulse (standalone) | Explored; IC unstable / not robust | **No** |
+| SHFE pulp USD / residual fiber | Wired into Wood on Wheels | **No** |
 | Full set under IC weights + lags | Machinery ready; LBR=F sample short | **No** |
-
-### Rebuild note
-
-Lag-1 raw damage once appeared strong (IC ~ +0.41) under a single alignment.
-Clean re-test: lag-1 ICs ~ 0 to negative; rolling IC mean ~ −0.08.
-Rebuild v2 preserves short-window level + spike with correct-sign buckets, but is **not** a proven edge.
-
-### Price–engine link (Sep 2026)
-
-Engine regime **NORMAL** through the summer peak (~617–659) and August selloff (−7%).
-No shortage signal into the high; no glut signal into the drop.
-Live backtest from 2022-08 still negative. See **PRICE_ENGINE_LINK.md**.
 
 ### Binding constraints
 
 1. LBR=F usable monthly history ~ 2022+ only.
-2. Alternative series coverage still incomplete (Trends placeholder, sparse mortgage/DIY).
+2. Alternative series still incomplete (Trends placeholder; no mill×fire spatial).
 3. n ~ 30–50 months is insufficient for stable IC / backtest claims.
 
-The framework (lags, IC weights, free alt-data injectors) is in place.
-The constraint is **data length and quality**, not code.
+The framework is in place. The constraint is data length and quality, not code.

@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+title: Lumber Quant Engine
+message: If you use this software, please cite it as below.
+type: software
+authors:
+  - family-names: Son
+    given-names: Liam
+repository-code: https://github.com/Liam-Son/Lumber-Quant-Engine
+license: MIT
+version: 3.1.0
+date-released: "2026-09-07"
+abstract: >
+  Open research software for a six-factor pressure and regime model of
+  softwood lumber futures. Implements publication lags, expanding-window
+  information-coefficient weights, free alternative-data injectors, and
+  honest null results on CME LBR=F.
+keywords:
+  - lumber futures
+  - alternative data
+  - factor models
+  - publication lag
+  - information coefficient
