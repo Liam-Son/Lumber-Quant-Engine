@@ -57,3 +57,7 @@ pip install -r requirements.txt
 ## License
 
 MIT
+
+---
+
+Lab status: [STATUS.md](STATUS.md)
